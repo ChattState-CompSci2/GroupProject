@@ -11,7 +11,10 @@ package groupproject;
  * @author mjhanevich
  */
 public class Tester {
-
+    
+    public static Cart mostRecentCart;
+    // public static Receipt mostRecentReceipt;
+    
     /**
      * @param args the command line arguments
      */

@@ -43,6 +43,11 @@ public class Commands {
          * Searches for a specific item
          */
         LOOKUP,
+        
+        /**
+         * Displays your current cart
+         */
+        CART,
 
         /**
          * Quits the application.
@@ -59,6 +64,7 @@ public class Commands {
         CommandData.put(CommandNames.HELP, "HELP\n├Lists all commands and their use cases\n│└Syntax: Help\n└Looks up documentation for a specific command\n ├Syntax: Help [command]\n └Commands: [Any valid command name]");
         CommandData.put(CommandNames.CHECKOUT, "CHECKOUT\n└Begins a basic Checkout operation\n └Syntax: Checkout [Flags]\n  └Flags: [\"-d\": debug, \"-q\": quick test]\n   ├debug: \"Enables debug text and messages\"\n   └quick test: \"Instead of taking user input, runs a predefined routine for easy testing\"");
         CommandData.put(CommandNames.RECEIPT, "RECEIPT\n└\"Prints\" a receipt of latest checkout operation\n └Syntax: Receipt");
+        CommandData.put(CommandNames.CART, "CART\n└Displays all items in user's cart\n └Syntax: Cart");
         CommandData.put(CommandNames.QUIT, "QUIT\n└Quits the application\n └Syntax: Quit");
     }
     
@@ -118,6 +124,15 @@ public class Commands {
     public static void do_receipt() {
         // This command will be implemented by someone else,
         //  then either connected to here or referenced here
+    }
+    
+    /**
+     * Prints the toString method of the most recent Cart object.
+     */
+    public static void do_cart() {
+        if (Tester.mostRecentCart != null) {
+            System.out.println(Tester.mostRecentCart.toString());
+        }
     }
 
     /**
