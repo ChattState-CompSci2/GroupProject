@@ -65,4 +65,31 @@ public class Register_OS {
             }
         }
     }
+
+        // Inner class for Cart
+    private class Cart {
+        private final List<Product> items;
+
+        public Cart() {
+            items = new ArrayList<>();
+        }
+
+        public void addItem(Product product) {
+            items.add(product);
+        }
+
+        public void checkout() {
+            double totalPrice = 0.0;
+            for (Product item : items) {
+                totalPrice += item.getPrice();
+            }
+            System.out.println("Items in the cart:");
+            for (Product item : items) {
+                System.out.println(item.getName() + " - $" + item.getPrice());
+            }
+            System.out.println("Total Price: $" + totalPrice);
+            items.clear();
+        }
+    }
+}
 }
