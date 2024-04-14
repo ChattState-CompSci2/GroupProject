@@ -1,3 +1,5 @@
+/* THIS IS OKAY TO BE DELETED BEFORE FINAL SUBMISSION, MERGED WITH REGISTER_OS: The Register_OS and Cart classes were merged to create a new class that allows users to select products, add them to a cart, and checkout. The Cart class was integrated into Register_OS to manage the shopping cart. When a product is selected, it's added to the cart. The application asks if the user wants to checkout. If yes, the total price is calculated, and the checkout process is completed. The loop for product selection ends after checkout. */
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
