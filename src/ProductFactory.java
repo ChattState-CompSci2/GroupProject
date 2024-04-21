@@ -1,10 +1,7 @@
 // Weston Hale
 // A00267225
 
-<<<<<<<< Updated upstream:Weston/src/ProductFactory.java
-========
 
->>>>>>>> Stashed changes:src/ProductFactory.java
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -23,11 +20,13 @@ public class ProductFactory {
     public Boolean Init(){
         JsonReader j_Read = new JsonReader();
         try {
-			JsonArray product_json_array = j_Read.read_jarray_from_file("products.json", "products");
-			
-			if(!product_json_array.isEmpty()){
-				for (JsonElement p_element : product_json_array) {
-					JsonObject p_obj = p_element.getAsJsonObject();
+            JsonArray product_json_array = j_Read.read_jarray_from_file("products.json", "products");
+                
+            if(!product_json_array.isEmpty()){
+                
+                for (JsonElement p_element : product_json_array) {
+                    
+                    JsonObject p_obj = p_element.getAsJsonObject();
 
                     Boolean weightable = p_obj.get("WEIGHABLE").getAsBoolean();       
                     Product p = null;
@@ -38,24 +37,17 @@ public class ProductFactory {
                     else{
                         p = new Product();
                     }
-<<<<<<<< Updated upstream:Weston/src/ProductFactory.java
-
-					p.setName(p_obj.get("PRODUCT_NAME").getAsString());
-					p.setPrice(p_obj.get("PRICE_RETAIL").getAsDouble());
-========
                     
                     p.setName(p_obj.get("PRODUCT_NAME").getAsString());
                     p.setPrice(p_obj.get("PRICE_RETAIL").getAsDouble());
->>>>>>>> Stashed changes:src/ProductFactory.java
                     p.setTax(p_obj.get("TAX_RATE").getAsDouble());
-					p.setSku(p_obj.get("SKU").getAsInt());
-
-					products.put(p.getSku(), p);
-				}
-			}
+                    p.setSku(p_obj.get("SKU").getAsInt());
+                    
+                    products.put(p.getSku(), p);
+                }
+            }
             return true;
-        }
-		catch (Exception e) {
+        } catch (Exception e) {
             System.out.println("Exception on JSON reader!");
         }
         return false;

@@ -1,10 +1,7 @@
 // Weston Hale
 // A00267225
 
-<<<<<<<< Updated upstream:Weston/src/JsonReader.java
-========
 
->>>>>>>> Stashed changes:src/JsonReader.java
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;

@@ -1,33 +1,19 @@
-<<<<<<< Updated upstream:Product.java
-public class Product {
-=======
 
 class Product implements Comparable<Product>{
->>>>>>> Stashed changes:src/Product.java
     private String name;
-    /**
-     * Empty Constructor
-     */
-    public Product() {
-    }
-    /**
-     * Default Constructor
-     * @param name
-     */
+    protected double price;
+    private int sku;
+    private double tax_rate;
+    
+    public Product() {}
+    
     public Product(String name) {
         this.name = name;
     }
-    /**
-     * returns information of a product object
-     * @return
-     */
-    @Override
-    public String toString() {
-        return "Product{" + "name=" + name + '}';
+    
+    public String getName() {
+        return name;
     }
-<<<<<<< Updated upstream:Product.java
-}
-=======
 
     public void setName(String name) {
         this.name = name;
@@ -67,4 +53,3 @@ class Product implements Comparable<Product>{
         return Integer.compare(this.sku, otherProduct.getSku());
     }
 }
->>>>>>> Stashed changes:src/Product.java
