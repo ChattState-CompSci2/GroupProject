@@ -1,79 +1,60 @@
 /**
- * The CartItem class represents an item in a shopping cart.
-*/
+ * A item in a shopping cart, which includes a product, quantity, price, and tax.
+ */
+public class CartItem {
 
-class CartItem {
-
-    /**
-     * The product that this item represents.
-*/
     private Product product;
-
-    /**
-     * The quantity of this item in the cart.
-*/
     private double quantity;
-
-    /**
-     * The price of this item.
-*/
     private double price;
-
-    /**
-     * The tax of this item.
-*/
     private double tax;
 
     /**
-     * Creates a new CartItem with the given product and quantity.
-* If the product is WeighableProduct, then the price and tax are calculated based on the product's weight.
-* @param product The product to represent
-* @param quantity The quantity of the product
-*/
-    public CartItem(Product product, double quantity) {
-        if (product instanceof WeighableProduct) {
+     * Constructs a new CartItem with the specified product and quantity.
+     * Calculates the price and tax based on the type of product.
+     *
+     * @param product the product for this cart item
+     * @param quantity the quantity or weight of the product
+     */
+    public CartItem(Product product, double quantity){
+        this.product = product;
+        this.quantity = quantity;
+
+        if(product instanceof WeighableProduct){
             WeighableProduct wp = (WeighableProduct)product;
             price = wp.getPrice(quantity);
             tax = wp.getTax(quantity);
-        } else {
+        }
+        else{
             price = product.getPrice();
             tax = product.getTax();
         }
-        this.product = product;
-        this.quantity = quantity;
-        this.price = price;
-        this.tax = tax;
     }
 
     /**
-     * Gets the product that this item represents.
-* @return The product that this item represents.
-*/
-    public Product getProduct() {
+     * @return the Product class
+     */
+    public Product getProduct(){
         return this.product;
     }
 
     /**
-     * Gets the quantity of this item in the cart.
-* @return The quantity of this item in the cart.
-*/
-    public double getQuantity() {
+     * @return the quantity of the product or Weight for weighable products.
+     */
+    public double getQuantity(){
         return this.quantity;
     }
 
     /**
-     * Gets the price of this item.
-* @return The price of this item.
-*/
-    public double getPrice() {
+     * @return the price
+     */
+    public double getPrice(){
         return this.price;
     }
 
     /**
-     * Gets the tax of this item.
-* @return The tax of this item.
-*/
-    public double getTax() {
+     * @return the tax
+     */
+    public double getTax(){
         return this.tax;
     }
 

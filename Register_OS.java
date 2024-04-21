@@ -11,7 +11,7 @@ public class Register_OS {
 
     public static void main(String[] args) {
  
-        // Allocate the transaction list and Command Handler
+        // Initializes the Scanner and Command Handler
         in = new Scanner(System.in);
         ch = new CommandHandler();
 
@@ -21,7 +21,7 @@ public class Register_OS {
             System.exit(0);
         }
 
-        // Add commands
+        // Add commands. Command Name, Method and Help Text
         ch.addCommand("START", new Command(() -> doTransaction(), "Starts a new order"));
         ch.addCommand("SEARCH", new Command(() -> searchProduct(), "Search the product list"));
         ch.addCommand("LIST", new Command(() -> listProducts(), "List all available products"));
@@ -57,7 +57,11 @@ public class Register_OS {
     }
 
 
-    // 
+    /**
+     * Function called via Command
+     * Creates an instance of Cart and begins a transaction.
+     * Handles adding to the card, checkout, saving the recipt and printing change
+     */
     public static void doTransaction() {
         Cart cart = new Cart();
         
@@ -127,7 +131,10 @@ public class Register_OS {
     }
 
     
-    // Search Command
+    /**
+     * Function called via Command
+     * The user inputs a SKU or Name to search the entire product list.
+     */
     public static void searchProduct(){
         try {
             System.out.print("Enter Product SKU or Name: ");
@@ -146,7 +153,10 @@ public class Register_OS {
     }
 
 
-    // List All Products Command
+    /**
+     * Function called via Command
+     * Prints the entire list of loaded products. 
+     */
     public static void listProducts(){
         Map<Integer, Product> products = pfac.getProducts();
         for (Map.Entry<Integer, Product> entry : products.entrySet()) {
