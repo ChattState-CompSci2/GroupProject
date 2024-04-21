@@ -2,31 +2,36 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Cart {
-        private final List<Product> items;
-        private java.util.Date dateCreated;
+    private List<CartItem> items;
+    private java.util.Date dateCreated;
 
-        public Cart() {
-            items = new ArrayList<>();
-            this.dateCreated = new java.util.Date();
-        }
+    public Cart() {
+        items = new ArrayList<>();
+        this.dateCreated = new java.util.Date();
+    }
 
-        public void addItem(Product product) {
-            items.add(product);
-        }
+    public void add(Product product, double quantity) {
+        items.add(new CartItem(product, quantity));
+    }
 
-        public void checkout() {
-            double totalPrice = 0.0;
-            for (Product item : items) {
-                totalPrice += item.getPrice();
-            }
-            
-            Receipt r = new Receipt((ArrayList<Product>)items);
-            System.out.println("Here is your receipt!\n" + r.toString());
-            
-            items.clear();
+    public double getTotal(){
+        double total = 0;
+        for (CartItem item : items) {
+            total += item.getPrice() + item.getTax();
         }
+        return total;
+    }
 
-        public java.util.Date getDateCreated(){
-            return this.dateCreated;
-        }
+
+    public void checkout(double cash) {
+        
+        Receipt r = new Receipt((ArrayList<CartItem>)items);
+        System.out.println("Here is your receipt!\n" + r.toString());
+        r.toFile("transactions/" + this.getDateString() + ".txt");
+    }
+
+    public String getDateString(){
+        return this.dateCreated.toString().replace(":", "-");
+    }
+
 }

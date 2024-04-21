@@ -10,6 +10,7 @@ import java.util.Scanner;
  *
  * @author mjhanevich
  */
+/*
 public class InputHandler {
     private static String lastLine = "";
     private static Scanner scanner = new Scanner(System.in);
@@ -61,3 +62,5 @@ public class InputHandler {
         return lastLine;
     }
 }
+
+*/

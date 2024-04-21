@@ -1,48 +1,49 @@
 
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
 
-/**
- * Merged class that combines the functionality of Register_OS and Cart.
- * It allows users to select products, add them to a cart, and perform checkout.
- * @author Ellie
- */
-
 public class Register_OS {
     public static ProductFactory pfac;
-    public List<Receipt> transactions;
-    public static Map<String, Command> methods;
+    public static CommandHandler ch;
+
+    public static List<Cart> transactions;
+
     public static Boolean exitProgram = false;
 
-    public static void main(String[] args) {
 
-        
+    public static void main(String[] args) {
+ 
+        // Allocate the transaction list and Command Handler
+        transactions = new ArrayList<>();
+        ch = new CommandHandler();
+
         // Initialize Product list
         pfac = new ProductFactory();
-        if (!pfac.Init()) {
+        if (!pfac.loadProducts()) {
             System.exit(0);
         }
 
 
-        Commands.Initialize();
-        methods = new HashMap<>();
-        methods.put("START", new Command(() -> startTransaction(), "Starts a new order"));
-        methods.put("SEARCH", new Command(() -> startTransaction(), "Search the product list"));
-        methods.put("LIST", new Command(() -> startTransaction(), "List all available products"));
-        methods.put("HISTORY", new Command(() -> startTransaction(), "Find a previous transaction"));
-        methods.put("EXIT", new Command(() -> exitProgram = true, "Exits the program"));
-        methods.put("QUIT", new Command(() -> exitProgram = true, "Exits the program"));
+        // Add commands
+        ch.addCommand("START", new Command(() -> doTransaction(), "Starts a new order"));
+        ch.addCommand("SEARCH", new Command(() -> searchProduct(), "Search the product list"));
+        ch.addCommand("LIST", new Command(() -> listProducts(), "List all available products"));
+       // ch.addCommand("HISTORY", new Command(() -> getHistory(), "Find a previous transaction"));
+        ch.addCommand("HELP", new Command(() -> ch.listCommands(), "List all commands and their help text"));
+        ch.addCommand("EXIT", new Command(() -> exitProgram = true, "Exits the program"));
+        ch.addCommand("QUIT", new Command(() -> exitProgram = true, "Exits the program"));
 
 
-
+        // Main input loop for handling commands
         try(Scanner in = new Scanner(System.in)){
             while(exitProgram == false && in.hasNext()){
-                Command c = methods.get(in.next().toUpperCase());
+                Command c = ch.getCommand(in.next());
                 if(c != null){
-                    c.run(); // Run the bound method stored in the Command
+                    // Run the bound method stored in the Command
+                    c.run();
                 }
                 else{
                     System.out.println("Invalid Command!");
@@ -55,60 +56,61 @@ public class Register_OS {
 
     }
 
-    public static void startTransaction(){
+    public static void doTransaction(){
+        Cart cart = new Cart();
+        
+        try(Scanner in = new Scanner(System.in)){
 
+            System.out.println("Enter 'C' to Checkout");
+
+            while(true){
+
+                System.out.print("Enter Product SKU or Name: ");
+                if(!in.hasNext()){
+                    continue;
+                }
+                String text = in.nextLine();
+                Product p = pfac.getProduct(text);
+
+                if(text.equalsIgnoreCase("C")){
+                    break;
+                }
+                // Check if it is a weightable Product
+                else if(p != null && p instanceof WeighableProduct){
+                    System.out.print("Enter Product Weight: ");
+                    if(in.hasNextDouble()){
+                        double weight = in.nextDouble();
+                        cart.add((WeighableProduct) p, weight);
+                    }
+                }
+                else if( p != null){
+                    cart.add(p, 1);
+                }
+                else{
+                    System.out.println("No product found!");
+                }
+            }
+
+            // Save to the transaction history list
+            System.out.printf("Ammount Due: %f\n Enter Cash Ammount: ", cart.getTotal());
+            if(in.hasNextDouble()){
+                double cashAmmount = in.nextDouble();
+                cart.checkout(cashAmmount);
+            }
+        }
+        catch(Exception e){
+            System.out.println("Caught Exception: " + e.getMessage());
+        }
     }
 
     public static void searchProduct(){
 
     }
 
-    public static void getHistory(){
-
-    }
-
-    public static void quitProgram(){
-
-    }
-
-    public static void run() {
-        System.out.println("Loaded " + pfac.GetProductList().size() + " products");
-        Scanner in = new Scanner(System.in);
-
-        while (true) {
-
-            Cart cart = new Cart(); // Initialize the shopping cart
-
-            System.out.print("Enter Product SKU or Name: ");
-            Product p = null;
-
-            if (in.hasNext()) {
-                String name = in.nextLine();
-                p = pfac.GetProduct(name);
-            }
-
-            if (p != null) {
-                if (p instanceof WeighableProduct) {
-                    WeighableProduct wp = (WeighableProduct) p;
-                    System.out.print("Enter Product Weight: ");
-                    double weight = in.nextDouble();
-                    System.out.printf("%d %s Price:$%.2f TaxRate:%.2f%% Total: $%.2f\n",
-                            wp.getSku(), wp.getName(), wp.getPrice(weight), wp.getTax() * 100.0f, wp.getPrice(weight) + (wp.getPrice(weight) * wp.getTax()));
-                    cart.addItem(wp); // Add the product to the cart
-                } else {
-                    System.out.printf("%d %s Price:$%.2f TaxRate:%.2f%% Total: $%.2f\n",
-                            p.getSku(), p.getName(), p.getPrice(), p.getTax() * 100.0f, p.getPrice() + (p.getPrice() * p.getTax()));
-                    cart.addItem(p); // Add the product to the cart
-                }
-            }
-
-            System.out.print("Do you want to checkout? (yes/no): ");
-            String checkout = in.nextLine();
-            if (checkout.equalsIgnoreCase("yes")) {
-                cart.checkout(); // Perform checkout
-                break; // Exit the loop after checkout
-            }
+    public static void listProducts(){
+        Map<Integer, Product> products = pfac.getProducts();
+        for (Map.Entry<Integer, Product> entry : products.entrySet()) {
+            System.out.println(entry.getValue());
         }
     }
-
 }

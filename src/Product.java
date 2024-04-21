@@ -1,18 +1,21 @@
 
 class Product implements Comparable<Product>{
+    private int sku;
     private String name;
     protected double price;
-    private int sku;
-    private double tax_rate;
+    protected double tax_rate;
     
     public Product() {}
     
-    public Product(String name) {
+    public Product(int sku, String name, double price, double tax_rate) {
+        this.sku = sku;
         this.name = name;
+        this.price = price;
+        this.tax_rate = tax_rate;
     }
     
     public String getName() {
-        return name;
+        return this.name;
     }
 
     public void setName(String name) {
@@ -20,27 +23,31 @@ class Product implements Comparable<Product>{
     }
 
     public double getPrice() {
-        return price;
-    }
-
-    public void setTax(double tax_rate){
-        this.tax_rate = tax_rate;
-    }
-
-    public double getTax(){
-        return tax_rate;
+        return this.price;
     }
 
     public void setPrice(double price) {
         this.price = price;
     }
 
-    public void setSku(int sku){
-        this.sku = sku;
+    public double getTaxRate(){
+        return this.tax_rate;
+    }
+
+    public double getTax(){
+        return this.price * this.tax_rate;
+    }
+
+    public void setTaxRate(double tax_rate){
+        this.tax_rate = tax_rate;
     }
 
     public int getSku(){
         return this.sku;
+    }
+
+    public void setSku(int sku){
+        this.sku = sku;
     }
 
     @Override

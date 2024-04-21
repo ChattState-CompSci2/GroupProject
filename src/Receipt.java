@@ -8,7 +8,7 @@ import java.util.ArrayList;
  */
 public class Receipt {
     
-    private ArrayList<Product> items;
+    private ArrayList<CartItem> items;
 
     /**
      * Constructs an empty receipt.
@@ -21,25 +21,18 @@ public class Receipt {
      * Constructs a Receipt with passed items ArrayList.
      * @param itemList 
      */
-    public Receipt(ArrayList<Product> itemList) {
-        items = (ArrayList<Product>)itemList.clone();
-    }
-
-    /**
-     * Adds an item from product to the receipt.
-     */
-    public void addItem(Product product) {
-        items.add(product);
+    public Receipt(ArrayList<CartItem> itemList) {
+        items = (ArrayList<CartItem>)itemList.clone();
     }
 
     /**
      * Calculates the total price of all products in the receipt.
      * returns the total price of all products
      */
-    public double getTotal() {
+    public double getTotal(){
         double total = 0;
-        for (Product item : items) {
-            total += item.getPrice();
+        for (CartItem item : items) {
+            total += item.getPrice() + item.getTax();
         }
         return total;
     }
@@ -52,8 +45,8 @@ public class Receipt {
         String receiptString = "Receipt:\n";
         receiptString += "----------------------------------------\n";
         for (int i = 0; i < items.size(); i++) {
-            Product item = items.get(i);
-            receiptString += (i + 1) + ". " + item.getName() + ": $" + String.format("%.2f", item.getPrice()) + "\n";
+            CartItem item = items.get(i);
+            receiptString += (i + 1) + ". " + item.getProduct().getName() + ": $" + String.format("%.2f", item.getProduct().getPrice()) + "\n";
         }
         receiptString += "----------------------------------------\n";
         receiptString += "Total: $" + String.format("%.2f", getTotal());

@@ -17,5 +17,4 @@ public class Command {
     public void run(){
         method.run();
     }
-
 }

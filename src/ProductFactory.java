@@ -17,7 +17,7 @@ public class ProductFactory {
         products = new TreeMap<>();
     }
 
-    public Boolean Init(){
+    public Boolean loadProducts(){
         JsonReader j_Read = new JsonReader();
         try {
             JsonArray product_json_array = j_Read.read_jarray_from_file("products.json", "products");
@@ -40,7 +40,7 @@ public class ProductFactory {
                     
                     p.setName(p_obj.get("PRODUCT_NAME").getAsString());
                     p.setPrice(p_obj.get("PRICE_RETAIL").getAsDouble());
-                    p.setTax(p_obj.get("TAX_RATE").getAsDouble());
+                    p.setTaxRate(p_obj.get("TAX_RATE").getAsDouble());
                     p.setSku(p_obj.get("SKU").getAsInt());
                     
                     products.put(p.getSku(), p);
@@ -54,26 +54,26 @@ public class ProductFactory {
     }
 
 
-    public Map<Integer, Product> GetProductList(){
+    public Map<Integer, Product> getProducts(){
         return products;
     }
 
     // Takes in a string and determines if you entered a SKU or product name
-    public Product GetProduct(String nameOrID){
+    public Product getProduct(String nameOrID){
         try {
             Integer pID = Integer.parseInt(nameOrID);
-            return GetProductByID(pID);
+            return getProductByID(pID);
         } catch (NumberFormatException e) {
-            return GetProductByName(nameOrID);
+            return getProductByName(nameOrID);
         }
     }
 
     // Search by string
-    private Product GetProductByName(String name){
+    private Product getProductByName(String name){
 
         for (Map.Entry<Integer, Product> entry : products.entrySet()) {
             Product p = entry.getValue();
-            if(name.toLowerCase().equals(p.getName().toLowerCase())){
+            if(name.equalsIgnoreCase(p.getName())){
                 return p;
             }
         }
@@ -81,7 +81,8 @@ public class ProductFactory {
     }
 
     // Search by ID
-    private Product GetProductByID(Integer ID){
+    private Product getProductByID(Integer ID){
         return products.get(ID);
     }
+    
 }
