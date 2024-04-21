@@ -20,7 +20,7 @@ public class ProductFactory {
     public Boolean loadProducts(String fileName, String jsonObject){
         JsonReader j_Read = new JsonReader();
         try {
-            JsonArray product_json_array = j_Read.read_jarray_from_file(fileName, jsonObject);
+            JsonArray product_json_array = j_Read.readJsonArrayFromFile(fileName, jsonObject);
                 
             if(!product_json_array.isEmpty()){
                 

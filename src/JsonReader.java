@@ -13,7 +13,7 @@ import com.google.gson.JsonElement;
 
 public class JsonReader {
     
-    public JsonArray read_jarray_from_file(String file_name, String array_name){
+    public JsonArray readJsonArrayFromFile(String file_name, String array_name){
 
         try{
             Reader reader = new FileReader(file_name);
