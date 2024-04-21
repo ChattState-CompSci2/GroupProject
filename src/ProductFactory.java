@@ -17,10 +17,10 @@ public class ProductFactory {
         products = new TreeMap<>();
     }
 
-    public Boolean loadProducts(){
+    public Boolean loadProducts(String fileName, String jsonObject){
         JsonReader j_Read = new JsonReader();
         try {
-            JsonArray product_json_array = j_Read.read_jarray_from_file("products.json", "products");
+            JsonArray product_json_array = j_Read.read_jarray_from_file(fileName, jsonObject);
                 
             if(!product_json_array.isEmpty()){
                 

@@ -9,12 +9,14 @@ import java.util.ArrayList;
 public class Receipt {
     
     private ArrayList<CartItem> items;
+    private java.util.Date dateCreated;
 
     /**
      * Constructs an empty receipt.
      */
     public Receipt() {
         items = new ArrayList<>();
+        this.dateCreated = new java.util.Date();
     }
     
     /**
@@ -23,6 +25,7 @@ public class Receipt {
      */
     public Receipt(ArrayList<CartItem> itemList) {
         items = (ArrayList<CartItem>)itemList.clone();
+        this.dateCreated = new java.util.Date();
     }
 
     /**
@@ -42,11 +45,11 @@ public class Receipt {
      */
     @Override
     public String toString() {
-        String receiptString = "Receipt:\n";
+        String receiptString = String.format("Receipt: %s\n", this.getDateString());
         receiptString += "----------------------------------------\n";
         for (int i = 0; i < items.size(); i++) {
             CartItem item = items.get(i);
-            receiptString += (i + 1) + ". " + item.getProduct().getName() + ": $" + String.format("%.2f", item.getProduct().getPrice()) + "\n";
+            receiptString += String.format("[%d] %-10s Price: $%.2f Tax: $%.2f\n", i, item.getProduct().getName(), item.getPrice(), item.getTax());
         }
         receiptString += "----------------------------------------\n";
         receiptString += "Total: $" + String.format("%.2f", getTotal());
@@ -56,11 +59,15 @@ public class Receipt {
 
 
     public void toFile(String path){
-        try (FileWriter outFile = new FileWriter(path)) {      
+        try (FileWriter outFile = new FileWriter(path + this.getDateString() + ".txt")) {      
             outFile.write(this.toString());
         } catch (IOException e) {
             System.out.println("Caught Exception: " + e.getMessage());
         }
+    }
+
+    public String getDateString(){
+        return this.dateCreated.toString().replace(":", "-");
     }
 }
 

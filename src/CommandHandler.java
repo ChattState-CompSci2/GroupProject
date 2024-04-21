@@ -19,8 +19,9 @@ public class CommandHandler {
     }
  
     public void listCommands(){
+        System.out.println("Commands:");
         for (Map.Entry<String, Command> entry : commands.entrySet()) {
-            System.out.printf("%-8s: %s\n", entry.getKey(), entry.getValue().getHelpText());
+            System.out.printf("\t%-8s: %s\n", entry.getKey(), entry.getValue().getHelpText());
         }
     }
 }
