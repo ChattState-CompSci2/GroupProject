@@ -1,5 +1,11 @@
 public class Change {
 
+
+    /**
+     * Returns a string that lists the coin and bill change ammounts
+     * @param owed The payment ammount
+     * @param payment The ammount of tender given to the cashier
+     */
     public static String getChangeString (double owed, double payment) {
         double change = payment - owed;
         System.out.printf("Change: $%.2f\n", change);
@@ -62,6 +68,7 @@ public class Change {
         }
         return result;
     }
+    
     
     public static int findCoin (double change, double value) {
         int finalCoin = 0;
