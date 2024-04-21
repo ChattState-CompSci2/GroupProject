@@ -1,7 +1,7 @@
 // Weston Hale
 // A00267225
 
-
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -9,80 +9,109 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
+/**
+ * The `ProductFactory` class is responsible for loading and managing the `Product` objects that represent items in a shopping cart.
+* It stores these objects in a map with the `Product`'s SKU as the key.
+*/
 public class ProductFactory {
+    private Map<String, Product> products = new TreeMap<>();
 
-    private Map<Integer, Product> products = null;
-
-    public ProductFactory(){
-        products = new TreeMap<>();
+    /**
+     * Called when an item is added to the cart. The function creates a new `Product` object and adds it to the map.
+*/
+    public void addProduct(Product product) {
+        products.put(product.getSku(), product);
     }
 
-    public Boolean loadProducts(String fileName, String jsonObject){
-        JsonReader j_Read = new JsonReader();
-        try {
-            JsonArray product_json_array = j_Read.readJsonArrayFromFile(fileName, jsonObject);
-                
-            if(!product_json_array.isEmpty()){
-                
-                for (JsonElement p_element : product_json_array) {
-                    
-                    JsonObject p_obj = p_element.getAsJsonObject();
+    /**
+     * Called when an item is removed from the cart. The function removes the item from the map.
+*/
+    public void removeProduct(String sku) {
+        products.remove(sku);
+    }
 
-                    Boolean weightable = p_obj.get("WEIGHABLE").getAsBoolean();       
-                    Product p = null;
-
-                    if(weightable){
-                        p = new WeighableProduct();
-                    }
-                    else{
-                        p = new Product();
-                    }
-                    
-                    p.setName(p_obj.get("PRODUCT_NAME").getAsString());
-                    p.setPrice(p_obj.get("PRICE_RETAIL").getAsDouble());
-                    p.setTaxRate(p_obj.get("TAX_RATE").getAsDouble());
-                    p.setSku(p_obj.get("SKU").getAsInt());
-                    
-                    products.put(p.getSku(), p);
-                }
-            }
-            return true;
-        } catch (Exception e) {
-            System.out.println("Exception on JSON reader!");
+    /**
+     * Called when a total price is calculated. The function calculates the total price of all items in the cart.
+*/
+    public double calculateTotalPrice() {
+        double totalPrice = 0;
+        for (Map.Entry<String, Product> entry : products.entrySet()) {
+            product = entry.getValue();
+            totalPrice += product.getPrice() * product.getQuantity();
         }
-        return false;
+        return totalPrice;
     }
 
-
-    public Map<Integer, Product> getProducts(){
-        return products;
+    /**
+     * Called when a specific product is requested. The function looks up the product in the map and returns it.
+*/
+    public Product getProduct(String sku) {
+        return products.get(sku);
     }
 
-    // Takes in a string and determines if you entered a SKU or product name
-    public Product getProduct(String nameOrID){
-        try {
-            Integer pID = Integer.parseInt(nameOrID);
-            return getProductByID(pID);
-        } catch (NumberFormatException e) {
-            return getProductByName(nameOrID);
-        }
+    /**
+     * Called when there is an error loading or processing products. The function prints the error message.
+*/
+    public void handleError() {
+        System.out.println("Error loading or processing products");
     }
-
-    // Search by string
-    private Product getProductByName(String name){
-
-        for (Map.Entry<Integer, Product> entry : products.entrySet()) {
-            Product p = entry.getValue();
-            if(name.equalsIgnoreCase(p.getName())){
-                return p;
-            }
-        }
-        return null;
-    }
-
-    // Search by ID
-    private Product getProductByID(Integer ID){
-        return products.get(ID);
-    }
-    
 }
+``
+
+
+import java.util.ArrayList;
+import java.util.Map;
+import java.util.TreeMap;
+
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+
+/**
+ * ProductFactory class loads and manages the 'Product' objects that represent shopping cart items.
+*  It saves these objects in a map using the Product's SKU as the key.
+*/
+public class ProductFactory {
+    private Map<String, Product> products = new TreeMap<>();
+
+    /**
+     * Called whenever an item is added to the cart. The function defines a new 'Product' object and adds it to the map.
+*/
+    public void addProduct(Product product) {
+        products.put(product.getSku(), product);
+    }
+
+    /**
+     * Called when an item is removed from the cart. The function removes the item from the map.
+*/
+    public void removeProduct(String sku) {
+        products.remove(sku);
+    }
+
+    /**
+     * When the full price is calculated. The function totals the prices of all products in the cart.
+*/
+    public double calculateTotalPrice() {
+        double totalPrice = 0;
+        for (Map.Entry<String, Product> entry : products.entrySet()) {
+            product = entry.getValue();
+            totalPrice += product.getPrice() * product.getQuantity();
+        }
+        return totalPrice;
+    }
+
+    /**
+     * When a specific product is requested, the call is placed. The function looks up and returns the product from the map.
+*/
+    public Product getProduct(String sku) {
+        return products.get(sku);
+    }
+
+    /**
+     * Called when there is a problem loading or processing products. The function prints an error message.
+*/
+    public void handleError() {
+        System.out.println("Error loading or processing products");
+    }
+}
+
