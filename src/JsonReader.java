@@ -20,16 +20,16 @@ public class JsonReader {
      * @return A JsonArray object of the JSON array read.
      * @throws IOException If an IO error occurs while reading the file.
      */
-    public JsonArray readJsonArrayFromFile(String file_name, String array_name){
+    public JsonArray readJsonArrayFromFile(String fileName, String arrayName){
 
         try{
-            Reader reader = new FileReader(file_name);
+            Reader reader = new FileReader(fileName);
             Gson gson = new Gson();
 
-			JsonElement j_element = gson.fromJson(reader, JsonElement.class);
-			JsonArray j_pro_array = j_element.getAsJsonObject().getAsJsonArray(array_name);
+			JsonElement jElement = gson.fromJson(reader, JsonElement.class);
+			JsonArray jArray = jElement.getAsJsonObject().getAsJsonArray(arrayName);
             // Deep Copy seems to be necessary else the object is destroyed after the function ends on return.
-            return j_pro_array.deepCopy();
+            return jArray.deepCopy();
         }
         catch(IOException e)
         {

@@ -27,9 +27,9 @@ public class ProductFactory {
      * @return true if products are loaded successfully, false if not.
      */
     public Boolean loadProducts(String fileName, String jsonArray){
-        JsonReader j_Read = new JsonReader();
+        JsonReader jReader = new JsonReader();
         try {
-            JsonArray productJArray = j_Read.readJsonArrayFromFile(fileName, jsonArray);
+            JsonArray productJArray = jReader.readJsonArrayFromFile(fileName, jsonArray);
                 
             if(!productJArray.isEmpty()){
                 

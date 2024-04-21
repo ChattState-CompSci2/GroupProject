@@ -5,7 +5,7 @@ class Product implements Comparable<Product> {
     private int sku;
     private String name;
     protected double price;
-    protected double tax_rate;
+    protected double taxRate;
 
     /**
      * Default constructor.
@@ -17,13 +17,13 @@ class Product implements Comparable<Product> {
      * @param sku
      * @param name 
      * @param price
-     * @param tax_rate tax rate in decimal format Ex: 0.05
+     * @param taxRate tax rate in decimal format Ex: 0.05
      */
-    public Product(int sku, String name, double price, double tax_rate) {
+    public Product(int sku, String name, double price, double taxRate) {
         this.sku = sku;
         this.name = name;
         this.price = price;
-        this.tax_rate = tax_rate;
+        this.taxRate = taxRate;
     }
 
     /**
@@ -61,22 +61,22 @@ class Product implements Comparable<Product> {
      * @return the tax rate from 0.0 - 1.0
      */
     public double getTaxRate() {
-        return this.tax_rate;
+        return this.taxRate;
     }
 
     /**
      * Sets the tax rate of the product.
-     * @param tax_rate the new tax rate
+     * @param taxRate the new tax rate
      */
-    public void setTaxRate(double tax_rate) {
-        this.tax_rate = tax_rate;
+    public void setTaxRate(double taxRate) {
+        this.taxRate = taxRate;
     }
 
     /**
      * @return the product tax
      */
     public double getTax() {
-        return this.price * this.tax_rate;
+        return this.price * this.taxRate;
     }
 
     /**

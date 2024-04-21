@@ -20,6 +20,6 @@ class WeighableProduct extends Product {
      * @return the taxof the product * weight
      */
     public double getTax(double weight){
-        return (this.price * this.tax_rate) * weight;
+        return (this.price * this.taxRate) * weight;
     }
 }
