@@ -3,28 +3,28 @@
 
         {
             "PRODUCT_NAME": "Jello",
-            "SKU": 1230001,
+            "SKU": 12001,
             "PRICE_RETAIL": 1.50,
             "WEIGHABLE": false,
             "TAX_RATE": 0.07 
         },
         {
             "PRODUCT_NAME": "Cereal",
-            "SKU": 1230002,
+            "SKU": 12002,
             "PRICE_RETAIL": 3.99,
             "WEIGHABLE": false,
             "TAX_RATE": 0.07 
         },
         {
             "PRODUCT_NAME": "Cheese",
-            "SKU": 1230003,
+            "SKU": 12003,
             "PRICE_RETAIL": 2.49,
             "WEIGHABLE": false,
             "TAX_RATE": 0.04
         },
         {
             "PRODUCT_NAME": "Milk",
-            "SKU": 1230004,
+            "SKU": 12004,
             "PRICE_RETAIL": 4.49,
             "WEIGHABLE": false,
             "TAX_RATE": 0.04

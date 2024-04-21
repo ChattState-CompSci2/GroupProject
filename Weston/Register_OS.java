@@ -1,43 +1,103 @@
-package groupproject;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
+
 
 /**
  * Merged class that combines the functionality of Register_OS and Cart.
  * It allows users to select products, add them to a cart, and perform checkout.
  * @author Ellie
  */
+<<<<<<< Updated upstream:Weston/Register_OS.java
 public class Register_OS {
     private ProductFactory pfac;
     private Cart cart; // Instance of Cart class to manage shopping cart operations
+=======
+>>>>>>> Stashed changes:Register_OS.java
 
-    public Register_OS() {
+public class Register_OS {
+    public static ProductFactory pfac;
+    public List<Receipt> transactions;
+    public static Map<String, Command> methods;
+    public static Boolean exitProgram = false;
+
+    public static void main(String[] args) {
+
+        
+        // Initialize Product list
         pfac = new ProductFactory();
         if (!pfac.Init()) {
             System.exit(0);
         }
-        cart = new Cart(); // Initialize the shopping cart
+
+
+        Commands.Initialize();
+        methods = new HashMap<>();
+        methods.put("START", new Command(() -> startTransaction(), "Starts a new order"));
+        methods.put("SEARCH", new Command(() -> startTransaction(), "Search the product list"));
+        methods.put("LIST", new Command(() -> startTransaction(), "List all available products"));
+        methods.put("HISTORY", new Command(() -> startTransaction(), "Find a previous transaction"));
+        methods.put("EXIT", new Command(() -> exitProgram = true, "Exits the program"));
+        methods.put("QUIT", new Command(() -> exitProgram = true, "Exits the program"));
+
+
+
+        try(Scanner in = new Scanner(System.in)){
+            while(exitProgram == false && in.hasNext()){
+                Command c = methods.get(in.next().toUpperCase());
+                if(c != null){
+                    c.run(); // Run the bound method stored in the Command
+                }
+                else{
+                    System.out.println("Invalid Command!");
+                }
+            }
+        }
+        catch(Exception e){
+            System.out.println("Caught Exception: " + e.getMessage());
+        }
+
     }
 
+<<<<<<< Updated upstream:Weston/Register_OS.java
     public static void main(String[] args) {
         Register_OS app = new Register_OS();
         app.run();
     }
 
     public void run() {
+=======
+    public static void startTransaction(){
+
+    }
+
+    public static void searchProduct(){
+
+    }
+
+    public static void getHistory(){
+
+    }
+
+    public static void quitProgram(){
+
+    }
+
+    public static void run() {
+>>>>>>> Stashed changes:Register_OS.java
         System.out.println("Loaded " + pfac.GetProductList().size() + " products");
         Scanner in = new Scanner(System.in);
 
         while (true) {
+
+            Cart cart = new Cart(); // Initialize the shopping cart
+
             System.out.print("Enter Product SKU or Name: ");
             Product p = null;
 
-            if (in.hasNextInt()) {
-                Integer sku = in.nextInt();
-                p = pfac.GetProduct(sku);
-            } else if (in.hasNext()) {
+            if (in.hasNext()) {
                 String name = in.nextLine();
                 p = pfac.GetProduct(name);
             }
@@ -66,6 +126,7 @@ public class Register_OS {
         }
     }
 
+<<<<<<< Updated upstream:Weston/Register_OS.java
         // Inner class for Cart
     private class Cart {
         private final List<Product> items;
@@ -91,5 +152,7 @@ public class Register_OS {
             items.clear();
         }
     }
+=======
+>>>>>>> Stashed changes:Register_OS.java
 }
 }
