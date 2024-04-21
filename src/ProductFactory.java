@@ -1,7 +1,4 @@
-// Weston Hale
-// A00267225
 
-import java.util.ArrayList;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -10,108 +7,99 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 /**
- * The `ProductFactory` class is responsible for loading and managing the `Product` objects that represent items in a shopping cart.
-* It stores these objects in a map with the `Product`'s SKU as the key.
-*/
+ * A factory class for allocating and searching products.
+ */
 public class ProductFactory {
-    private Map<String, Product> products = new TreeMap<>();
+
+    private Map<Integer, Product> products;
 
     /**
-     * Called when an item is added to the cart. The function creates a new `Product` object and adds it to the map.
-*/
-    public void addProduct(Product product) {
-        products.put(product.getSku(), product);
+     * Constructs a new ProductFactory and initializes the product map.
+     */
+    public ProductFactory(){
+        products = new TreeMap<>();
     }
 
     /**
-     * Called when an item is removed from the cart. The function removes the item from the map.
-*/
-    public void removeProduct(String sku) {
-        products.remove(sku);
-    }
+     * Loads products from a JSON file into the factorys product map.
+     * @param fileName The name of the JSON file.
+     * @param jsonArray The name of the JSON array containing product data.
+     * @return true if products are loaded successfully, false if not.
+     */
+    public Boolean loadProducts(String fileName, String jsonArray){
+        JsonReader j_Read = new JsonReader();
+        try {
+            JsonArray productJArray = j_Read.readJsonArrayFromFile(fileName, jsonArray);
+                
+            if(!productJArray.isEmpty()){
+                
+                for (JsonElement pElement : productJArray) {
+                    
+                    JsonObject pObj = pElement.getAsJsonObject();
 
-    /**
-     * Called when a total price is calculated. The function calculates the total price of all items in the cart.
-*/
-    public double calculateTotalPrice() {
-        double totalPrice = 0;
-        for (Map.Entry<String, Product> entry : products.entrySet()) {
-            product = entry.getValue();
-            totalPrice += product.getPrice() * product.getQuantity();
+                    Boolean weighable = pObj.get("WEIGHABLE").getAsBoolean();       
+                    Product p = weighable ? new WeighableProduct() : new Product();
+                    
+                    p.setName(pObj.get("PRODUCT_NAME").getAsString());
+                    p.setPrice(pObj.get("PRICE_RETAIL").getAsDouble());
+                    p.setTaxRate(pObj.get("TAX_RATE").getAsDouble());
+                    p.setSku(pObj.get("SKU").getAsInt());
+                    
+                    products.put(p.getSku(), p);
+                }
+            }
+            return true;
+        } 
+        catch (Exception e) {
+            System.out.println("Exception on JSON reader!");
         }
-        return totalPrice;
+        return false;
     }
 
     /**
-     * Called when a specific product is requested. The function looks up the product in the map and returns it.
-*/
-    public Product getProduct(String sku) {
-        return products.get(sku);
+     * @return The product map.
+     */
+    public Map<Integer, Product> getProducts(){
+        return products;
     }
 
     /**
-     * Called when there is an error loading or processing products. The function prints the error message.
-*/
-    public void handleError() {
-        System.out.println("Error loading or processing products");
+     * Gets a product by its name or ID.
+     * @param nameOrID The name or ID of the product.
+     * @return The product if found, null if not.
+     */
+    public Product getProduct(String nameOrID){
+        try {
+            Integer pID = Integer.parseInt(nameOrID);
+            return getProductByID(pID);
+        } 
+        catch (NumberFormatException e) {
+            return getProductByName(nameOrID);
+        }
+    }
+
+    /**
+     * Gets a product by its name.
+     * @param name The name of the product.
+     * @return The product if found, null if not.
+     */
+    private Product getProductByName(String name){
+
+        for (Map.Entry<Integer, Product> entry : products.entrySet()) {
+            Product p = entry.getValue();
+            if(name.equalsIgnoreCase(p.getName())){
+                return p;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Gets a product by its ID.
+     * @param ID The ID of the product.
+     * @return The product if found, null if not.
+     */
+    private Product getProductByID(Integer ID){
+        return products.get(ID);
     }
 }
-``
-
-
-import java.util.ArrayList;
-import java.util.Map;
-import java.util.TreeMap;
-
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-
-/**
- * ProductFactory class loads and manages the 'Product' objects that represent shopping cart items.
-*  It saves these objects in a map using the Product's SKU as the key.
-*/
-public class ProductFactory {
-    private Map<String, Product> products = new TreeMap<>();
-
-    /**
-     * Called whenever an item is added to the cart. The function defines a new 'Product' object and adds it to the map.
-*/
-    public void addProduct(Product product) {
-        products.put(product.getSku(), product);
-    }
-
-    /**
-     * Called when an item is removed from the cart. The function removes the item from the map.
-*/
-    public void removeProduct(String sku) {
-        products.remove(sku);
-    }
-
-    /**
-     * When the full price is calculated. The function totals the prices of all products in the cart.
-*/
-    public double calculateTotalPrice() {
-        double totalPrice = 0;
-        for (Map.Entry<String, Product> entry : products.entrySet()) {
-            product = entry.getValue();
-            totalPrice += product.getPrice() * product.getQuantity();
-        }
-        return totalPrice;
-    }
-
-    /**
-     * When a specific product is requested, the call is placed. The function looks up and returns the product from the map.
-*/
-    public Product getProduct(String sku) {
-        return products.get(sku);
-    }
-
-    /**
-     * Called when there is a problem loading or processing products. The function prints an error message.
-*/
-    public void handleError() {
-        System.out.println("Error loading or processing products");
-    }
-}
-

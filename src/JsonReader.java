@@ -1,15 +1,3 @@
-// Weston Hale
-// A00267225
-
-/*JsonReader
-Class for reading a JSON array from a file using the Google Gson library for Java
-Parameters:
-file_name (String) - name of the file to read the JSON array from
-array_name (String) - name of the JSON array to read
-Returns:
-JsonArray object of the JSON array read
-@throws IOException - if an IO error occurs while reading the file
-@catch (Exception exception) - to print out the exception message and type */
 
 import java.io.FileReader;
 import java.io.IOException;
@@ -20,8 +8,18 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 
+/**
+ * A class for reading a JSON array from a file using the Google Gson library for Java.
+ */
 public class JsonReader {
     
+    /**
+     * Reads a JSON array from a file.
+     * @param fileName The name of the file to read the JSON array from.
+     * @param arrayName The name of the JSON array to read.
+     * @return A JsonArray object of the JSON array read.
+     * @throws IOException If an IO error occurs while reading the file.
+     */
     public JsonArray readJsonArrayFromFile(String file_name, String array_name){
 
         try{
@@ -30,13 +28,15 @@ public class JsonReader {
 
 			JsonElement j_element = gson.fromJson(reader, JsonElement.class);
 			JsonArray j_pro_array = j_element.getAsJsonObject().getAsJsonArray(array_name);
-
-            return j_pro_array.deepCopy(); // This seems to be necessary else the object is destroyed after the function ends on return.
+            // Deep Copy seems to be necessary else the object is destroyed after the function ends on return.
+            return j_pro_array.deepCopy();
         }
-        catch(IOException e){
+        catch(IOException e)
+        {
             System.out.println("Caught IOException: " + e.getMessage());
         }
-        catch(Exception e){
+        catch(Exception e)
+        {
             System.out.println("Caught Exception: " + e.getMessage());
         }
         
