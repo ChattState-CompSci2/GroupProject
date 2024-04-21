@@ -12,6 +12,10 @@ public class Cart {
         items.add(new CartItem(product, quantity));
     }
 
+    public CartItem removeLast(){
+        return items.removeLast();
+    }
+
     public double getTotal(){
         double total = 0;
         for (CartItem item : items) {

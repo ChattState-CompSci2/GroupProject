@@ -74,27 +74,38 @@ public class Register_OS {
                 if (text.equalsIgnoreCase("C")) {
                     break;
                 }
+
+                // Remove Most Recent Item
+                if(text.charAt(0) == '-'){
+                    CartItem c = cart.removeLast();
+                    if(c != null){
+                        System.out.println("Removed " + c.getProduct());
+                    }
+                    continue;
+                }
+                // Add Item
+                else{
     
-                Product p = pfac.getProduct(text);
-    
-                if (p != null) {
-                    if (p instanceof WeighableProduct) {
-                        System.out.print("Enter Product Weight: ");
-                        if (in.hasNextDouble()) {
-                            double weight = in.nextDouble();
-                            cart.add((WeighableProduct) p, weight);
+                    Product p = pfac.getProduct(text); 
+                    if (p != null) {
+                        if (p instanceof WeighableProduct) {
+                            System.out.print("Enter Product Weight: ");
+                            if (in.hasNextDouble()) {
+                                double weight = in.nextDouble();
+                                cart.add((WeighableProduct) p, weight);
+                            } 
+                            else {
+                                System.out.println("Invalid weight input.");
+                            }
+                            in.nextLine(); // Skip the newline
                         } 
                         else {
-                            System.out.println("Invalid weight input.");
+                            cart.add(p, 1);
                         }
-                        in.nextLine(); // Skip the newline
                     } 
                     else {
-                        cart.add(p, 1);
+                        System.out.println("No product found!");
                     }
-                } 
-                else {
-                    System.out.println("No product found!");
                 }
             }
     
