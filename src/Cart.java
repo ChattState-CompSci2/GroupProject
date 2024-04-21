@@ -28,7 +28,7 @@ public class Cart {
     public void checkout(double cash) {
         
         Receipt r = new Receipt((ArrayList<CartItem>)items);
-        System.out.println("Here is your receipt!\n" + r.toString());
+        System.out.println("Here is your receipt!\n" + r.getReceipt(cash));
         r.toFile("transactions/");
     }
 
