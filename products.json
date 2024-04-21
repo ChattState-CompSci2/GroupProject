@@ -30,6 +30,27 @@
             "TAX_RATE": 0.04
         },
         {
+            "PRODUCT_NAME": "Eggs",
+            "SKU": 12005,
+            "PRICE_RETAIL": 2.49,
+            "WEIGHABLE": false,
+            "TAX_RATE": 0.04
+        },
+        {
+            "PRODUCT_NAME": "Bread",
+            "SKU": 12006,
+            "PRICE_RETAIL": 3.49,
+            "WEIGHABLE": false,
+            "TAX_RATE": 0.04
+        },
+        {
+            "PRODUCT_NAME": "Pasta",
+            "SKU": 12007,
+            "PRICE_RETAIL": 1.99,
+            "WEIGHABLE": false,
+            "TAX_RATE": 0.04
+        },
+        {
             "PRODUCT_NAME": "Apple",
             "SKU": 6784,
             "PRICE_RETAIL": 3.00,
