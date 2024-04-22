@@ -4,10 +4,10 @@ import java.util.Scanner;
 
 
 public class Register_OS {
-    public static ProductFactory pfac;
-    public static CommandHandler ch;
-    public static Boolean exitProgram = false;
-    static Scanner in = null;
+    private static ProductFactory pfac;
+    private static CommandHandler ch;
+    private static Boolean exitProgram = false;
+    private static Scanner in = null;
 
     
     /** 
