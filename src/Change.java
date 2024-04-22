@@ -8,62 +8,61 @@ public class Change {
      */
     public static String getChangeString (double owed, double payment) {
         double change = payment - owed;
-        System.out.printf("Change: $%.2f\n", change);
         
-        String result = "";
+        String result = String.format("Change: $%.2f", change);
 
         if (change >= 50.00) {
             int fifties = findCoin (change, 50.00);
             change -= 50.00 * fifties;
-            result += ("\nFifties: " + fifties);
+            result += ("\n   Fifties: " + fifties);
 
         }
         if (change >= 20.00) {
             int twenties = findCoin (change, 20.00);
             change -= 20.00 * twenties;
-            result += ("\nTwenties: " + twenties);
+            result += ("\n   Twenties: " + twenties);
 
         }
         if (change >= 10.00) {
             int tens = findCoin (change, 10.00);
             change -= 10.00 * tens;
-            result += ("\nTens: " + tens);
+            result += ("\n   Tens: " + tens);
 
         }
         if (change >= 5.00) {
             int fives = findCoin (change, 5.00);
             change -= 5.00 * fives;
-            result += ("\nFives: " + fives);
+            result += ("\n   Fives: " + fives);
 
         }
         if (change >= 1.00) {
             int ones = findCoin (change, 1.00);
             change -= 1.00 * ones;
-            result += ("\nOnes: " + ones);
+            result += ("\n   Ones: " + ones);
             
         }
         if (change >= 0.25) {
             int quarters = findCoin (change, 0.25);
             change -= 0.25 * quarters;
-            result += ("\nQuarters: " + quarters);
+            result += ("\n   Quarters: " + quarters);
             
         }
         if (change >= 0.10) {
             int dimes = findCoin (change, 0.10);
             change -= 0.10 * dimes;
-            result += ("\nDimes: " + dimes);
+            result += ("\n   Dimes: " + dimes);
 
         }
         if (change >= 0.05) {
             int nickels = findCoin (change, 0.05);
             change -= 0.05 * nickels;
-            result += ("\nNickels: " + nickels);
+            result += ("\n   Nickels: " + nickels);
 
         }
         if (change > 0.00) {
             int pennies = findCoin (change, 0.01);
             change -= 0.01 * pennies;
-            result += ("\nPennies: " + pennies);
+            result += ("\n   Pennies: " + pennies);
 
         }
         return result;
