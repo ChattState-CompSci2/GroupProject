@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * The Cart class contains a list of CartItem used at checkout
@@ -43,6 +44,13 @@ public class Cart {
     }
 
     /**
+     * @return The list of CartItems
+     */
+    public List<CartItem> getItems(){
+        return items;
+    } 
+
+    /**
      * Prints the receipt, and saves it to a file and returns the change values.
      * @param cash The amount of cash provided by the customer.
      */
@@ -51,7 +59,7 @@ public class Cart {
         System.out.println(r.toString());
         r.toFile("transactions/");
 
-        System.out.printf("Change: %s\n", Change.getChangeString(getTotal(), cash));
+        System.out.printf("Tender: $%.2f\n%s\n\n", cash, Change.getChangeString(getTotal(), cash));
     }
 
 }

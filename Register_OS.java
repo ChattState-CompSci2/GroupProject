@@ -9,6 +9,10 @@ public class Register_OS {
     public static Boolean exitProgram = false;
     static Scanner in = null;
 
+    
+    /** 
+     * @param args
+     */
     public static void main(String[] args) {
  
         // Initializes the Scanner and Command Handler
@@ -64,10 +68,11 @@ public class Register_OS {
      */
     public static void doTransaction() {
         Cart cart = new Cart();
-        
+    
         try {
             System.out.println("Enter 'C' to Checkout");
-            
+    
+            // Loop until user decides to checkout
             while (true) {
                 System.out.print("Enter Product SKU or Name: ");
                 if (!in.hasNextLine()) {
@@ -75,61 +80,71 @@ public class Register_OS {
                 }
                 String text = in.nextLine().trim();
     
+                // If user enters 'C', break the loop and proceed to checkout
                 if (text.equalsIgnoreCase("C")) {
                     break;
                 }
-
-                // Remove Most Recent Item
-                if(text.charAt(0) == '-'){
-                    CartItem c = cart.removeLast();
-                    if(c != null){
-                        System.out.println("Removed " + c.getProduct());
+    
+                // Remove the most recent item if user input starts with '-'
+                if (text.startsWith("-") && cart.getItems().size() > 0) {
+                    CartItem removedItem = cart.removeLast();
+                    if (removedItem != null) {
+                        System.out.println("\tRemoved " + removedItem.getProduct());
                     }
                     continue;
                 }
-                // Add Item
-                else{
     
-                    Product p = pfac.getProduct(text); 
-                    if (p != null) {
-                        if (p instanceof WeighableProduct) {
-                            System.out.print("Enter Product Weight: ");
-                            if (in.hasNextDouble()) {
-                                double weight = in.nextDouble();
-                                cart.add((WeighableProduct) p, weight);
-                            } 
-                            else {
-                                System.out.println("Invalid weight input.");
+                // Add Product
+                Product product = pfac.getProduct(text);
+                if (product != null) {
+                    // Check if product is Weighable
+                    if (product instanceof WeighableProduct) {
+                        System.out.print("Enter Product Weight: ");
+                        if (in.hasNextDouble()) {
+                            double weight = in.nextDouble();
+                            if (weight > 0.0) {
+                                cart.add((WeighableProduct) product, weight);
+                                System.out.printf("\tAdded %s to cart\n", product);
+                                in.nextLine(); // Skip the newline
+                                continue;
                             }
-                            in.nextLine(); // Skip the newline
-                        } 
-                        else {
-                            cart.add(p, 1);
                         }
+                        // Displayer Error
+                        System.out.println("Invalid weight input.");
+                        in.nextLine(); // Skip the newline
                     } 
                     else {
-                        System.out.println("No product found!");
+                        // Default to 1 quantity on non weighable
+                        cart.add(product, 1);
+                        System.out.printf("\tAdded %s to cart\n", product);
                     }
+                } 
+                else {
+                    // Display error message
+                    System.out.println("No product found!");
                 }
             }
     
-            // Save to the transaction history list
+            // After adding all items, prompt for cash amount and proceed to checkout
             System.out.printf("Amount Due: $%.2f\nEnter Cash Amount: ", cart.getTotal());
             if (in.hasNextDouble()) {
                 double cashAmount = in.nextDouble();
-                cart.checkout(cashAmount);
-            } 
-            else {
-                System.out.println("Invalid cash amount input.");
+                if (cashAmount > cart.getTotal()) {
+                    cart.checkout(cashAmount);
+                    in.nextLine(); // Skip the newline
+                    return;
+                }
             }
-
+    
+            // If invalid cash amount, display error message
+            System.out.println("Invalid cash amount. Transaction aborted!");
             in.nextLine(); // Skip the newline
         } 
         catch (Exception e) {
+            // If any exception occurs, display error message
             System.out.println("Caught Exception: " + e.getMessage());
         }
     }
-
     
     /**
      * Function called via Command

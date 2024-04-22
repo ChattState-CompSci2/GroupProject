@@ -44,7 +44,7 @@ public class Receipt {
     @Override
     public String toString() {
         StringBuilder receiptString = new StringBuilder();
-        receiptString.append(String.format("Receipt: %s\n", this.getDateString()));
+        receiptString.append(String.format("\nReceipt: %s\n", this.getDateString()));
         receiptString.append("----------------------------------------\n");
         for (int i = 0; i < items.size(); i++) {
             CartItem item = items.get(i);
