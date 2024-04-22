@@ -70,7 +70,7 @@ public class Register_OS {
         Cart cart = new Cart();
     
         try {
-            System.out.println("Enter 'C' to Checkout");
+            System.out.println("--Transaction Started--\nEnter 'C' to Checkout or '-' to remove");
     
             // Loop until user decides to checkout
             while (true) {
