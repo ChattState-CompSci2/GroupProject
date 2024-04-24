@@ -51,6 +51,20 @@
             "TAX_RATE": 0.04
         },
         {
+            "PRODUCT_NAME": "Soup",
+            "SKU": 12008,
+            "PRICE_RETAIL": 1.79,
+            "WEIGHABLE": false,
+            "TAX_RATE": 0.07 
+        },
+        {
+            "PRODUCT_NAME": "Cheese",
+            "SKU": 12009,
+            "PRICE_RETAIL": 2.99,
+            "WEIGHABLE": false,
+            "TAX_RATE": 0.07 
+        },
+        {
             "PRODUCT_NAME": "Apple",
             "SKU": 6784,
             "PRICE_RETAIL": 3.00,
@@ -61,6 +75,27 @@
             "PRODUCT_NAME": "Banana",
             "SKU": 4011,
             "PRICE_RETAIL": 0.50,
+            "WEIGHABLE": true,
+            "TAX_RATE": 0.04
+        },
+        {
+            "PRODUCT_NAME": "Grapes",
+            "SKU": 4068,
+            "PRICE_RETAIL": 3.00,
+            "WEIGHABLE": true,
+            "TAX_RATE": 0.04
+        },
+        {
+            "PRODUCT_NAME": "Orange",
+            "SKU": 4069,
+            "PRICE_RETAIL": 1.50,
+            "WEIGHABLE": false,
+            "TAX_RATE": 0.04
+        },
+        {
+            "PRODUCT_NAME": "Potatoe",
+            "SKU": 4070,
+            "PRICE_RETAIL": 1.29,
             "WEIGHABLE": true,
             "TAX_RATE": 0.04
         }
